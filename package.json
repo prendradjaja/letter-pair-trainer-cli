@@ -11,6 +11,8 @@
   "dependencies": {
     "date-fns": "^2.8.1",
     "dolphinsr": "github:prendradjaja/dolphinsr",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
     "typescript": "^3.7.2"
   },
   "devDependencies": {

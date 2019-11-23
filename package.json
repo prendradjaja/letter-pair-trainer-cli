@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/request-promise-native": "^1.0.17",
     "date-fns": "^2.8.1",
     "dolphinsr": "github:prendradjaja/dolphinsr",
     "request": "^2.88.0",

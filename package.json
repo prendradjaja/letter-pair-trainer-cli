@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "date-fns": "^2.8.1",
     "dolphinsr": "github:prendradjaja/dolphinsr",
     "typescript": "^3.7.2"
   },

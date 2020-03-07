@@ -1,0 +1,5 @@
+. cleanup: get rid of angular code
+. add readability "comments" to db entries (and check that this doesn't break anything)
+. session stats
+. grid health visualizer
+. integrate with letter-pair-only memo trainer

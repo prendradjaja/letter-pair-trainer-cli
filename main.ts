@@ -32,10 +32,10 @@ async function main() {
   await app.init();
   // sync prompt? prompt sync?
 
+  console.log();
   while (app.card) {
-    console.log();
     const { front, back } = app.card;
-    prompt(front);
+    prompt(`${app.sessionStats.total + 1}. ${front}? (enter to continue) `);
     console.log(back);
     const rating = promptForRating();
     const review = {
@@ -46,6 +46,7 @@ async function main() {
     };
     storeReview(review);
     app.dolphin.addReviews(review);
+    app.sessionStats.total++;
     const newCard = app.dolphin.nextCard();
     if (newCard) {
       const front = newCard.front[0];
@@ -55,6 +56,7 @@ async function main() {
       console.log("No more cards! Exiting.");
       return;
     }
+    console.clear();
   }
 
   console.log("No more cards.");

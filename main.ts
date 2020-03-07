@@ -19,15 +19,69 @@ import {
 } from "./types";
 import { RATINGS } from "./constants";
 
+const prompt = require("prompt-sync")({ sigint: true }); // can i use import syntax?
+
 function randomChoice<T>(choices: T[]): T {
   var index = Math.floor(Math.random() * choices.length);
   return choices[index];
 }
 
-function main() {
+async function main() {
+  console.log("Loading...");
   const app = new App();
-  app.init();
-  console.log(app.card);
+  await app.init();
+  // sync prompt? prompt sync?
+
+  while (app.card) {
+    console.log();
+    const { front, back } = app.card;
+    prompt(front);
+    console.log(back);
+    const rating = promptForRating();
+    const review = {
+      master: app.card.dolphinCard.master,
+      combination: app.card.dolphinCard.combination,
+      ts: new Date(),
+      rating: rating,
+    };
+    storeReview(review);
+    app.dolphin.addReviews(review);
+    const newCard = app.dolphin.nextCard();
+    if (newCard) {
+      const front = newCard.front[0];
+      const back = newCard.back[0];
+      app.card = { front, back, flipped: false, dolphinCard: newCard };
+    } else {
+      console.log("No more cards! Exiting.");
+      return;
+    }
+  }
+
+  console.log("No more cards.");
+}
+
+function promptForRating(): DolphinSRRating {
+  console.log("Rating? 1-easy / 2-good / 3-hard / 4-again");
+  let response;
+  while (!parseRating(response)) {
+    response = prompt("> ");
+  }
+  return parseRating(response);
+}
+
+function parseRating(inputNumString: string): DolphinSRRating | undefined {
+  switch (inputNumString) {
+    case "1":
+      return "easy";
+    case "2":
+      return "good";
+    case "3":
+      return "hard";
+    case "4":
+      return "again";
+    default:
+      return;
+  }
 }
 
 class App {
